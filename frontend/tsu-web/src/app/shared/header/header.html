@@ -1,0 +1,56 @@
+<header class="site-header">
+  <div class="utility-bar">
+    <p>{{ 'header.department' | t }}</p>
+    <div class="utility-actions">
+      <div class="language-switcher">
+        <button type="button" [class.is-active]="i18n.language() === 'en'" (click)="setLanguage('en')">{{ 'header.english' | t }}</button>
+        <button type="button" [class.is-active]="i18n.language() === 'ka'" (click)="setLanguage('ka')">{{ 'header.georgian' | t }}</button>
+      </div>
+      <a href="https://www.tsu.ge/" target="_blank" rel="noreferrer">{{ 'header.officialSite' | t }}</a>
+    </div>
+  </div>
+
+  <div class="header-container">
+    <a class="brand" routerLink="/">
+      <img src="images/logo.png" alt="TSU logo" />
+      <div class="brand-copy">
+        <span class="brand-kicker">{{ 'header.brandKicker' | t }}</span>
+        <strong>{{ 'header.brandTitle' | t }}</strong>
+      </div>
+    </a>
+
+    <button
+      type="button"
+      class="mobile-menu-button"
+      [class.is-open]="mobileMenuOpen()"
+      [attr.aria-expanded]="mobileMenuOpen()"
+      [attr.aria-label]="mobileMenuOpen() ? ('header.closeMenu' | t) : ('header.openMenu' | t)"
+      (click)="toggleMobileMenu()"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="main-nav" aria-label="Primary navigation" [class.is-open]="mobileMenuOpen()">
+      <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMobileMenu()">{{ 'header.home' | t }}</a>
+      <a routerLink="/news" routerLinkActive="is-active" (click)="closeMobileMenu()">{{ 'header.news' | t }}</a>
+      <a routerLink="/events" routerLinkActive="is-active" (click)="closeMobileMenu()">{{ 'header.events' | t }}</a>
+      <a routerLink="/student-access" routerLinkActive="is-active" (click)="closeMobileMenu()">{{ 'header.studentAccess' | t }}</a>
+      <a routerLink="/club-membership" routerLinkActive="is-active" (click)="closeMobileMenu()">{{ 'header.clubMembership' | t }}</a>
+      <a routerLink="/welcome-party" routerLinkActive="is-active" (click)="closeMobileMenu()">{{ 'header.welcomeParty' | t }}</a>
+      <a routerLink="/student-profile" routerLinkActive="is-active" (click)="closeMobileMenu()">{{ 'header.studentProfile' | t }}</a>
+      <a routerLink="/hr-access" routerLinkActive="is-active" (click)="closeMobileMenu()">{{ 'header.hrAccess' | t }}</a>
+      <a routerLink="/self-government" routerLinkActive="is-active" (click)="closeMobileMenu()">{{ 'header.selfGovernment' | t }}</a>
+
+      @if (authState.isHr()) {
+        <a routerLink="/hr-dashboard" routerLinkActive="is-active" (click)="closeMobileMenu()">{{ 'header.hrDashboard' | t }}</a>
+      }
+
+      @if (authState.isAuthenticated()) {
+        <span class="session-pill">{{ authState.session()?.role }} | {{ authState.session()?.email }}</span>
+        <button type="button" class="logout-button" (click)="logout()">{{ 'header.logout' | t }}</button>
+      }
+    </nav>
+  </div>
+</header>

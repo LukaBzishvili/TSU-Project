@@ -1,0 +1,125 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <p class="page-kicker">{{ 'selfGovernment.kicker' | t }}</p>
+    <h1>{{ 'selfGovernment.title' | t }}</h1>
+    <p>{{ 'selfGovernment.text' | t }}</p>
+  </div>
+
+  <div class="access-layout">
+    <article class="info-card">
+      <h2>{{ 'selfGovernment.whatTitle' | t }}</h2>
+      <ul>
+        <li>{{ 'selfGovernment.item1' | t }}</li>
+        <li>{{ 'selfGovernment.item2' | t }}</li>
+        <li>{{ 'selfGovernment.item3' | t }}</li>
+      </ul>
+
+      <div class="mode-switch">
+        <button type="button" [class.is-active]="mode() === 'login'" (click)="setMode('login')">{{ 'selfGovernment.loginTab' | t }}</button>
+        <button type="button" [class.is-active]="mode() === 'register'" (click)="setMode('register')">{{ 'selfGovernment.registerTab' | t }}</button>
+      </div>
+
+      @if (feedback()) {
+        <p class="feedback">{{ feedback() }}</p>
+      }
+    </article>
+
+    @if (!authState.isSelfGovernment()) {
+      @if (mode() === 'register') {
+        <form class="form-card" #selfGovRegisterForm="ngForm" (ngSubmit)="register()">
+          <h2>{{ 'selfGovernment.registerTitle' | t }}</h2>
+
+          <label>
+            {{ 'selfGovernment.email' | t }}
+            <input [(ngModel)]="registerForm.email" name="registerEmail" type="email" required email maxlength="150" #registerEmail="ngModel" [class.input-error]="registerEmail.invalid && (registerEmail.touched || selfGovRegisterForm.submitted)" />
+          </label>
+
+          <label>
+            {{ 'selfGovernment.password' | t }}
+            <input [(ngModel)]="registerForm.password" name="registerPassword" type="password" required minlength="8" maxlength="64" #registerPassword="ngModel" [class.input-error]="registerPassword.invalid && (registerPassword.touched || selfGovRegisterForm.submitted)" />
+          </label>
+
+          <label>
+            {{ 'selfGovernment.organizationName' | t }}
+            <input [(ngModel)]="registerForm.organizationName" name="organizationName" required minlength="2" maxlength="120" />
+          </label>
+
+          <label>
+            {{ 'selfGovernment.representativeName' | t }}
+            <input [(ngModel)]="registerForm.representativeName" name="representativeName" required minlength="2" maxlength="80" />
+          </label>
+
+          <button class="submit-button" type="submit" [disabled]="busy() || selfGovRegisterForm.invalid">{{ 'selfGovernment.createAccount' | t }}</button>
+        </form>
+      } @else {
+        <form class="form-card" #selfGovLoginForm="ngForm" (ngSubmit)="login()">
+          <h2>{{ 'selfGovernment.loginTitle' | t }}</h2>
+
+          <label>
+            {{ 'selfGovernment.email' | t }}
+            <input [(ngModel)]="loginForm.email" name="loginEmail" type="email" required email maxlength="150" />
+          </label>
+
+          <label>
+            {{ 'selfGovernment.password' | t }}
+            <input [(ngModel)]="loginForm.password" name="loginPassword" type="password" required minlength="8" maxlength="64" />
+          </label>
+
+          <button class="submit-button" type="submit" [disabled]="busy() || selfGovLoginForm.invalid">{{ 'selfGovernment.signIn' | t }}</button>
+        </form>
+      }
+    } @else {
+      <form class="form-card event-form" #eventCreateForm="ngForm" (ngSubmit)="createEvent()">
+        <h2>{{ 'selfGovernment.eventTitle' | t }}</h2>
+
+        <label>
+          {{ 'selfGovernment.eventName' | t }}
+          <input [(ngModel)]="eventForm.title" name="eventTitle" required minlength="3" maxlength="160" />
+        </label>
+
+        <div class="field-grid">
+          <label>
+            {{ 'selfGovernment.date' | t }}
+            <input [(ngModel)]="eventForm.date" name="eventDate" type="date" required />
+          </label>
+
+          <label>
+            {{ 'selfGovernment.time' | t }}
+            <input [(ngModel)]="eventForm.time" name="eventTime" type="time" required />
+          </label>
+        </div>
+
+        <div class="field-grid">
+          <label>
+            {{ 'selfGovernment.location' | t }}
+            <input [(ngModel)]="eventForm.location" name="eventLocation" required minlength="2" maxlength="180" />
+          </label>
+
+          <label>
+            {{ 'selfGovernment.format' | t }}
+            <input [(ngModel)]="eventForm.format" name="eventFormat" required minlength="2" maxlength="60" />
+          </label>
+        </div>
+
+        <div class="field-grid">
+          <label>
+            {{ 'selfGovernment.contact' | t }}
+            <input [(ngModel)]="eventForm.contact" name="eventContact" required minlength="5" maxlength="150" />
+          </label>
+
+          <label>
+            {{ 'selfGovernment.organizer' | t }}
+            <input [(ngModel)]="eventForm.organizer" name="eventOrganizer" maxlength="120" />
+          </label>
+        </div>
+
+        <label>
+          {{ 'selfGovernment.summary' | t }}
+          <textarea [(ngModel)]="eventForm.summary" name="eventSummary" rows="5" required minlength="10" maxlength="1000"></textarea>
+        </label>
+
+        <button class="submit-button" type="submit" [disabled]="busy() || eventCreateForm.invalid">{{ 'selfGovernment.publishEvent' | t }}</button>
+      </form>
+    }
+  </div>
+</section>

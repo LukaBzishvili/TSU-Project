@@ -1,0 +1,138 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <div class="hero-copy">
+      <p class="page-kicker">{{ 'welcomeParty.kicker' | t }}</p>
+      <h1>{{ 'welcomeParty.title' | t }}</h1>
+      <p>{{ 'welcomeParty.text' | t }}</p>
+    </div>
+
+    <div class="hero-side">
+      <article class="hero-stat">
+        <span>{{ 'welcomeParty.benefitLabel' | t }}</span>
+        <strong>{{ 'welcomeParty.benefitTitle' | t }}</strong>
+        <p>{{ 'welcomeParty.benefitText' | t }}</p>
+      </article>
+      <article class="hero-stat">
+        <span>{{ 'welcomeParty.operationsLabel' | t }}</span>
+        <strong>{{ 'welcomeParty.operationsTitle' | t }}</strong>
+        <p>{{ 'welcomeParty.operationsText' | t }}</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="party-layout">
+    <form class="ticket-form" #welcomePartyForm="ngForm" (ngSubmit)="submit()">
+      <div class="section-title">
+        <h2>{{ 'welcomeParty.formTitle' | t }}</h2>
+        <p>{{ 'welcomeParty.formText' | t }}</p>
+      </div>
+
+      @if (feedback()) {
+        <p class="feedback">{{ feedback() }}</p>
+      }
+
+      <div class="field-grid">
+        <label>
+          {{ 'welcomeParty.fullName' | t }}
+          <input [(ngModel)]="form.fullName" name="fullName" required minlength="2" maxlength="100" #partyFullName="ngModel" [class.input-error]="partyFullName.invalid && (partyFullName.touched || welcomePartyForm.submitted)" />
+        </label>
+        @if (partyFullName.invalid && (partyFullName.touched || welcomePartyForm.submitted)) {
+          <p class="field-error">{{ 'welcomeParty.errors.fullName' | t }}</p>
+        }
+
+        <label>
+          {{ 'welcomeParty.email' | t }}
+          <input [(ngModel)]="form.email" name="email" type="email" required email maxlength="150" #partyEmail="ngModel" [class.input-error]="partyEmail.invalid && (partyEmail.touched || welcomePartyForm.submitted)" />
+        </label>
+        @if (partyEmail.invalid && (partyEmail.touched || welcomePartyForm.submitted)) {
+          <p class="field-error">{{ partyEmail.errors?.['required'] ? ('welcomeParty.errors.emailRequired' | t) : ('welcomeParty.errors.emailInvalid' | t) }}</p>
+        }
+
+        <label>
+          {{ 'welcomeParty.studentId' | t }}
+          <input [(ngModel)]="form.studentId" name="studentId" required minlength="4" maxlength="30" #partyStudentId="ngModel" [class.input-error]="partyStudentId.invalid && (partyStudentId.touched || welcomePartyForm.submitted)" />
+        </label>
+        @if (partyStudentId.invalid && (partyStudentId.touched || welcomePartyForm.submitted)) {
+          <p class="field-error">{{ 'welcomeParty.errors.studentId' | t }}</p>
+        }
+
+        <label>
+          {{ 'welcomeParty.faculty' | t }}
+          <input [(ngModel)]="form.faculty" name="faculty" required minlength="2" maxlength="120" #partyFaculty="ngModel" [class.input-error]="partyFaculty.invalid && (partyFaculty.touched || welcomePartyForm.submitted)" />
+        </label>
+        @if (partyFaculty.invalid && (partyFaculty.touched || welcomePartyForm.submitted)) {
+          <p class="field-error">{{ 'welcomeParty.errors.faculty' | t }}</p>
+        }
+
+        <label>
+          {{ 'welcomeParty.guests' | t }}
+          <input [(ngModel)]="form.guestCount" name="guestCount" type="number" min="0" max="2" #partyGuestCount="ngModel" [class.input-error]="partyGuestCount.invalid && (partyGuestCount.touched || welcomePartyForm.submitted)" />
+        </label>
+        @if (partyGuestCount.invalid && (partyGuestCount.touched || welcomePartyForm.submitted)) {
+          <p class="field-error">{{ 'welcomeParty.errors.guests' | t }}</p>
+        }
+      </div>
+
+      <label>
+        {{ 'welcomeParty.notes' | t }}
+        <textarea [(ngModel)]="form.notes" name="notes" rows="4" maxlength="500" #partyNotes="ngModel" [class.input-error]="partyNotes.invalid && (partyNotes.touched || welcomePartyForm.submitted)"></textarea>
+      </label>
+      @if (partyNotes.invalid && (partyNotes.touched || welcomePartyForm.submitted)) {
+        <p class="field-error">{{ 'welcomeParty.errors.notes' | t }}</p>
+      }
+
+      <label class="checkbox-row">
+        <input [(ngModel)]="form.agreed" name="agreed" type="checkbox" required #partyAgreed="ngModel" [class.input-error]="partyAgreed.invalid && (partyAgreed.touched || welcomePartyForm.submitted)" />
+        <span>{{ 'welcomeParty.agree' | t }}</span>
+      </label>
+      @if (partyAgreed.invalid && (partyAgreed.touched || welcomePartyForm.submitted)) {
+        <p class="field-error">{{ 'welcomeParty.errors.agreement' | t }}</p>
+      }
+
+      <button class="submit-button" type="submit" [disabled]="submitting() || welcomePartyForm.invalid">{{ 'welcomeParty.submit' | t }}</button>
+    </form>
+
+    <aside class="ticket-preview">
+      <article class="preview-card">
+        <p class="page-kicker">{{ 'welcomeParty.preview' | t }}</p>
+        <h2>{{ form.fullName || ('welcomeParty.namePreview' | t) }}</h2>
+        <div class="ticket-qr-shell">
+          <img class="ticket-qr" [src]="qrCodeUrl()" [alt]="'QR ' + (registration()?.ticketCode || previewCode())" />
+        </div>
+        <div class="ticket-code-meta">
+          <span>{{ 'welcomeParty.ticketCode' | t }}</span>
+          <strong>{{ registration()?.ticketCode || previewCode() }}</strong>
+        </div>
+        <p>{{ form.faculty }}</p>
+        <p class="muted-line">{{ 'welcomeParty.guestLine' | t }} {{ form.guestCount }}</p>
+      </article>
+
+      @if (registration(); as saved) {
+        <article class="confirmation-card">
+          <h2>{{ 'welcomeParty.successTitle' | t }}</h2>
+          <p>{{ 'welcomeParty.successText' | t }}</p>
+
+          <div class="confirmation-list">
+            <div>
+              <span>{{ 'welcomeParty.status' | t }}</span>
+              <strong>{{ saved.status }}</strong>
+            </div>
+            <div>
+              <span>{{ 'welcomeParty.ticketCode' | t }}</span>
+              <strong>{{ saved.ticketCode }}</strong>
+            </div>
+            <div>
+              <span>{{ 'welcomeParty.registeredAt' | t }}</span>
+              <strong>{{ saved.registeredAt }}</strong>
+            </div>
+          </div>
+        </article>
+      } @else {
+        <article class="confirmation-card muted-card">
+          <h2>{{ 'welcomeParty.nextTitle' | t }}</h2>
+          <p>{{ 'welcomeParty.nextText' | t }}</p>
+        </article>
+      }
+    </aside>
+  </div>
+</section>

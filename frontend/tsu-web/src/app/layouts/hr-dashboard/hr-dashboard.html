@@ -1,0 +1,92 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <p class="page-kicker">{{ 'hrDashboard.kicker' | t }}</p>
+    <h1>{{ 'hrDashboard.title' | t }}</h1>
+    <p>{{ 'hrDashboard.text' | t }}</p>
+  </div>
+
+  @if (!authState.isHr()) {
+    <article class="notice-card">
+      <h2>{{ 'hrDashboard.loginRequired' | t }}</h2>
+      <p>{{ 'hrDashboard.loginText' | t }}</p>
+      <a routerLink="/hr-access">{{ 'hrDashboard.loginButton' | t }}</a>
+    </article>
+  } @else {
+    <section class="toolbar">
+      <div class="toolbar-actions">
+        <button type="button" class="refresh-button" (click)="loadStudents()">{{ 'hrDashboard.refresh' | t }}</button>
+        <button type="button" class="secondary-button" (click)="resetFilters()">{{ 'hrDashboard.reset' | t }}</button>
+      </div>
+
+      <div class="filter-row">
+        <label>
+          {{ 'hrDashboard.search' | t }}
+          <input [ngModel]="search()" (ngModelChange)="search.set($event)" [placeholder]="'hrDashboard.searchPlaceholder' | t" />
+        </label>
+
+        <label>
+          {{ 'hrDashboard.graduationYear' | t }}
+          <select [ngModel]="graduationFilter()" (ngModelChange)="graduationFilter.set($event)">
+            <option value="all">{{ 'hrDashboard.allYears' | t }}</option>
+            @for (year of graduationOptions(); track year) {
+              <option [value]="year">{{ year }}</option>
+            }
+          </select>
+        </label>
+      </div>
+
+      @if (feedback()) {
+        <p class="feedback">{{ feedback() }}</p>
+      }
+    </section>
+
+    @if (loading()) {
+      <article class="notice-card">
+        <p>{{ 'hrDashboard.loading' | t }}</p>
+      </article>
+    } @else {
+      <div class="student-grid">
+        @for (student of filteredStudents(); track student.profileId) {
+          <article class="student-card">
+            <div class="card-top">
+              <div>
+                <h2>{{ student.fullName }}</h2>
+                <p>{{ student.email }}</p>
+              </div>
+              <span>{{ student.graduationYear }}</span>
+            </div>
+
+            <p>{{ student.summary }}</p>
+            <p class="meta-line">{{ student.department }}</p>
+
+            <div class="chip-row">
+              @for (skill of student.skills; track skill) {
+                <span>{{ skill }}</span>
+              }
+            </div>
+
+            @if (student.experiences.length) {
+              <div class="experience-preview">
+                <strong>{{ student.experiences[0].title }}</strong>
+                <p>{{ student.experiences[0].organization }} | {{ student.experiences[0].period }}</p>
+              </div>
+            }
+
+            @if (student.cvFiles.length) {
+              <div class="cv-preview">
+                <strong>{{ 'hrDashboard.uploadedCv' | t }}</strong>
+                @for (cv of student.cvFiles; track cv.id) {
+                  <span>{{ cv.originalFileName }}</span>
+                }
+              </div>
+            }
+          </article>
+        } @empty {
+          <article class="notice-card">
+            <p>{{ 'hrDashboard.noMatches' | t }}</p>
+          </article>
+        }
+      </div>
+    }
+  }
+</section>

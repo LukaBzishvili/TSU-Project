@@ -1,0 +1,37 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <p class="page-kicker">{{ 'newsPage.kicker' | t }}</p>
+    <h1>{{ 'newsPage.title' | t }}</h1>
+    <p>{{ 'newsPage.text' | t }}</p>
+  </div>
+
+  @if (loading()) {
+    <div class="news-grid">
+      <article class="news-card">
+        <h2>Loading official TSU news...</h2>
+      </article>
+    </div>
+  } @else if (feedback()) {
+    <div class="news-grid">
+      <article class="news-card">
+        <h2>News temporarily unavailable</h2>
+        <p>{{ feedback() }}</p>
+      </article>
+    </div>
+  } @else {
+    <div class="news-grid">
+      @for (item of newsItems(); track item.url) {
+        <article class="news-card">
+          <span class="tag">{{ item.category }}</span>
+          <h2>{{ item.title }}</h2>
+          <p>{{ item.summary }}</p>
+          <div class="meta-row">
+            <span>{{ item.date }}</span>
+            <span>{{ item.source }}</span>
+          </div>
+          <a class="news-link" [href]="item.url" target="_blank" rel="noreferrer">Read on official TSU site</a>
+        </article>
+      }
+    </div>
+  }
+</section>

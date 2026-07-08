@@ -1,0 +1,119 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <div class="hero-copy">
+      <p class="page-kicker">{{ 'clubMembership.kicker' | t }}</p>
+      <h1>{{ 'clubMembership.title' | t }}</h1>
+      <p>{{ 'clubMembership.text' | t }}</p>
+    </div>
+
+    <article class="hero-note">
+      <span>{{ 'clubMembership.noteLabel' | t }}</span>
+      <strong>{{ 'clubMembership.noteTitle' | t }}</strong>
+      <p>{{ 'clubMembership.noteText' | t }}</p>
+    </article>
+  </div>
+
+  <div class="club-layout">
+    <form class="membership-form" #clubMembershipForm="ngForm" (ngSubmit)="submit()">
+      <div class="section-title">
+        <h2>{{ 'clubMembership.formTitle' | t }}</h2>
+        <p>{{ 'clubMembership.formText' | t }}</p>
+      </div>
+
+      @if (feedback()) {
+        <p class="feedback">{{ feedback() }}</p>
+      }
+
+      <div class="field-grid">
+        <label>
+          {{ 'clubMembership.fullName' | t }}
+          <input [(ngModel)]="form.fullName" name="fullName" required minlength="2" maxlength="100" #clubFullName="ngModel" [class.input-error]="clubFullName.invalid && (clubFullName.touched || clubMembershipForm.submitted)" />
+        </label>
+        @if (clubFullName.invalid && (clubFullName.touched || clubMembershipForm.submitted)) {
+          <p class="field-error">{{ 'clubMembership.errors.fullName' | t }}</p>
+        }
+
+        <label>
+          {{ 'clubMembership.email' | t }}
+          <input [(ngModel)]="form.email" name="email" type="email" required email maxlength="150" #clubEmail="ngModel" [class.input-error]="clubEmail.invalid && (clubEmail.touched || clubMembershipForm.submitted)" />
+        </label>
+        @if (clubEmail.invalid && (clubEmail.touched || clubMembershipForm.submitted)) {
+          <p class="field-error">{{ clubEmail.errors?.['required'] ? ('clubMembership.errors.emailRequired' | t) : ('clubMembership.errors.emailInvalid' | t) }}</p>
+        }
+
+        <label>
+          {{ 'clubMembership.studentId' | t }}
+          <input [(ngModel)]="form.studentId" name="studentId" required minlength="4" maxlength="30" #clubStudentId="ngModel" [class.input-error]="clubStudentId.invalid && (clubStudentId.touched || clubMembershipForm.submitted)" />
+        </label>
+        @if (clubStudentId.invalid && (clubStudentId.touched || clubMembershipForm.submitted)) {
+          <p class="field-error">{{ 'clubMembership.errors.studentId' | t }}</p>
+        }
+
+        <label>
+          {{ 'clubMembership.clubName' | t }}
+          <input [(ngModel)]="form.clubName" name="clubName" required minlength="2" maxlength="100" #clubName="ngModel" [class.input-error]="clubName.invalid && (clubName.touched || clubMembershipForm.submitted)" />
+        </label>
+        @if (clubName.invalid && (clubName.touched || clubMembershipForm.submitted)) {
+          <p class="field-error">{{ 'clubMembership.errors.clubName' | t }}</p>
+        }
+      </div>
+
+      <label>
+        {{ 'clubMembership.interestArea' | t }}
+        <input [(ngModel)]="form.interestArea" name="interestArea" required minlength="2" maxlength="100" #interestArea="ngModel" [class.input-error]="interestArea.invalid && (interestArea.touched || clubMembershipForm.submitted)" />
+      </label>
+      @if (interestArea.invalid && (interestArea.touched || clubMembershipForm.submitted)) {
+        <p class="field-error">{{ 'clubMembership.errors.interestArea' | t }}</p>
+      }
+
+      <label>
+        {{ 'clubMembership.motivation' | t }}
+        <textarea [(ngModel)]="form.motivation" name="motivation" rows="5" required minlength="20" maxlength="700" #motivation="ngModel" [class.input-error]="motivation.invalid && (motivation.touched || clubMembershipForm.submitted)"></textarea>
+      </label>
+      @if (motivation.invalid && (motivation.touched || clubMembershipForm.submitted)) {
+        <p class="field-error">{{ 'clubMembership.errors.motivation' | t }}</p>
+      }
+
+      <label class="checkbox-row">
+        <input [(ngModel)]="form.agreedToContact" name="agreedToContact" type="checkbox" required #agreedToContact="ngModel" [class.input-error]="agreedToContact.invalid && (agreedToContact.touched || clubMembershipForm.submitted)" />
+        <span>{{ 'clubMembership.agree' | t }}</span>
+      </label>
+      @if (agreedToContact.invalid && (agreedToContact.touched || clubMembershipForm.submitted)) {
+        <p class="field-error">{{ 'clubMembership.errors.agree' | t }}</p>
+      }
+
+      <button class="submit-button" type="submit" [disabled]="submitting() || clubMembershipForm.invalid">{{ 'clubMembership.submit' | t }}</button>
+    </form>
+
+    <aside class="club-sidebar">
+      <article class="preview-card">
+        <p class="page-kicker">{{ 'clubMembership.preview' | t }}</p>
+        <h2>{{ form.clubName || ('clubMembership.clubPlaceholder' | t) }}</h2>
+        <div class="application-code">{{ application()?.applicationCode || previewCode() }}</div>
+        <p>{{ form.interestArea || ('clubMembership.interestPlaceholder' | t) }}</p>
+      </article>
+
+      @if (application(); as saved) {
+        <article class="confirmation-card">
+          <h2>{{ 'clubMembership.successTitle' | t }}</h2>
+          <p>{{ 'clubMembership.successText' | t }}</p>
+
+          <div class="confirmation-list">
+            <div>
+              <span>{{ 'clubMembership.status' | t }}</span>
+              <strong>{{ saved.status }}</strong>
+            </div>
+            <div>
+              <span>{{ 'clubMembership.applicationCode' | t }}</span>
+              <strong>{{ saved.applicationCode }}</strong>
+            </div>
+            <div>
+              <span>{{ 'clubMembership.appliedAt' | t }}</span>
+              <strong>{{ saved.appliedAt }}</strong>
+            </div>
+          </div>
+        </article>
+      }
+    </aside>
+  </div>
+</section>

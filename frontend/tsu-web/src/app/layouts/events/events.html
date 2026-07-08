@@ -1,0 +1,44 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <p class="page-kicker">{{ 'eventsPage.kicker' | t }}</p>
+    <h1>{{ 'eventsPage.title' | t }}</h1>
+    <p>{{ 'eventsPage.text' | t }}</p>
+  </div>
+
+  @if (loadError()) {
+    <p class="feedback">{{ loadError() }}</p>
+  }
+
+  <div class="event-list">
+    @for (event of eventItems(); track event.id) {
+      <article class="event-card">
+        <div class="event-top">
+          <span class="event-badge">{{ event.format }}</span>
+          <span class="event-date">{{ event.date }}</span>
+        </div>
+
+        <h2>{{ event.title }}</h2>
+        <p>{{ event.summary }}</p>
+
+        <dl class="event-meta">
+          <div>
+            <dt>{{ 'eventsPage.time' | t }}</dt>
+            <dd>{{ event.time }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'eventsPage.location' | t }}</dt>
+            <dd>{{ event.location }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'eventsPage.contact' | t }}</dt>
+            <dd>{{ event.contact }}</dd>
+          </div>
+        </dl>
+
+        @if (event.title.includes('Welcome Party')) {
+          <a routerLink="/welcome-party" class="ticket-link">{{ 'eventsPage.welcomeLink' | t }}</a>
+        }
+      </article>
+    }
+  </div>
+</section>

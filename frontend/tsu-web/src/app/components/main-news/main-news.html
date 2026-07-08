@@ -1,0 +1,25 @@
+<div class="main-news-container">
+  <h2>სიახლეები</h2>
+  <div class="main-news-full">
+    <div class="main-news-prior">
+      <img src="https://computing.tsu.ge/upload/news/7BOV9yuIZucrYMqk.jpg" alt="priority news" />
+      <div class="prior-news-info">
+        <span>14 ივნისი 2025</span>
+        <div class="prior-text">
+          <h5>თსუ სტუდენტები ფრანგული ენის კურსებზე გაემგზავრებიან</h5>
+          <p>
+            თსუ სტუდენტები ფრანგული ენის კურსებზე გაემგზავრებიანივანე ჯავახიშვილის სახელობის
+            თბილისის სახელმწიფო უნივერსიტეტის, ზუსტ და საბუნებისმეტყველო მეცნიერებათა ფაკულტეტის
+            კომპიუტერ...
+          </p>
+        </div>
+        <button>დეტალურად</button>
+      </div>
+    </div>
+    <div class="main-news-list">
+      @for (item of slides; track $index) {
+      <app-news-card></app-news-card>
+      }
+    </div>
+  </div>
+</div>

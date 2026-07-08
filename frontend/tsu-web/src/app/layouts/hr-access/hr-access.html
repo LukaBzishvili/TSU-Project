@@ -1,0 +1,100 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <p class="page-kicker">{{ 'hrAccess.kicker' | t }}</p>
+    <h1>{{ 'hrAccess.title' | t }}</h1>
+    <p>{{ 'hrAccess.text' | t }}</p>
+  </div>
+
+  <div class="access-layout">
+    <article class="info-card">
+      <h2>{{ 'hrAccess.whatTitle' | t }}</h2>
+      <ul>
+        <li>{{ 'hrAccess.item1' | t }}</li>
+        <li>{{ 'hrAccess.item2' | t }}</li>
+        <li>{{ 'hrAccess.item3' | t }}</li>
+      </ul>
+
+      <div class="mode-switch">
+        <button type="button" [class.is-active]="mode() === 'register'" (click)="setMode('register')">{{ 'hrAccess.registerTab' | t }}</button>
+        <button type="button" [class.is-active]="mode() === 'login'" (click)="setMode('login')">{{ 'hrAccess.loginTab' | t }}</button>
+      </div>
+
+      @if (feedback()) {
+        <p class="feedback">{{ feedback() }}</p>
+      }
+    </article>
+
+    @if (mode() === 'register') {
+      <form class="form-card" #hrRegisterForm="ngForm" (ngSubmit)="register()">
+        <h2>{{ 'hrAccess.registerTitle' | t }}</h2>
+
+        <label>
+          {{ 'hrAccess.workEmail' | t }}
+          <input [(ngModel)]="registerForm.email" name="registerEmail" type="email" required email maxlength="150" #hrRegisterEmail="ngModel" [class.input-error]="hrRegisterEmail.invalid && (hrRegisterEmail.touched || hrRegisterForm.submitted)" />
+        </label>
+        @if (hrRegisterEmail.invalid && (hrRegisterEmail.touched || hrRegisterForm.submitted)) {
+          <p class="field-error">{{ hrRegisterEmail.errors?.['required'] ? ('hrAccess.errors.emailRequired' | t) : ('hrAccess.errors.emailInvalid' | t) }}</p>
+        }
+
+        <label>
+          {{ 'hrAccess.password' | t }}
+          <input [(ngModel)]="registerForm.password" name="registerPassword" type="password" required minlength="8" maxlength="64" #hrRegisterPassword="ngModel" [class.input-error]="hrRegisterPassword.invalid && (hrRegisterPassword.touched || hrRegisterForm.submitted)" />
+        </label>
+        @if (hrRegisterPassword.invalid && (hrRegisterPassword.touched || hrRegisterForm.submitted)) {
+          <p class="field-error">{{ hrRegisterPassword.errors?.['required'] ? ('hrAccess.errors.passwordRequired' | t) : ('hrAccess.errors.passwordShort' | t) }}</p>
+        }
+
+        <label>
+          {{ 'hrAccess.companyName' | t }}
+          <input [(ngModel)]="registerForm.companyName" name="companyName" required minlength="2" maxlength="120" #companyName="ngModel" [class.input-error]="companyName.invalid && (companyName.touched || hrRegisterForm.submitted)" />
+        </label>
+        @if (companyName.invalid && (companyName.touched || hrRegisterForm.submitted)) {
+          <p class="field-error">{{ 'hrAccess.errors.companyName' | t }}</p>
+        }
+
+        <div class="field-grid">
+          <label>
+            {{ 'hrAccess.position' | t }}
+            <input [(ngModel)]="registerForm.position" name="position" required minlength="2" maxlength="80" #position="ngModel" [class.input-error]="position.invalid && (position.touched || hrRegisterForm.submitted)" />
+          </label>
+          @if (position.invalid && (position.touched || hrRegisterForm.submitted)) {
+            <p class="field-error">{{ 'hrAccess.errors.position' | t }}</p>
+          }
+
+          <label>
+            {{ 'hrAccess.contactPhone' | t }}
+            <input [(ngModel)]="registerForm.contactPhone" name="contactPhone" required minlength="7" maxlength="25" #contactPhone="ngModel" [class.input-error]="contactPhone.invalid && (contactPhone.touched || hrRegisterForm.submitted)" />
+          </label>
+          @if (contactPhone.invalid && (contactPhone.touched || hrRegisterForm.submitted)) {
+            <p class="field-error">{{ 'hrAccess.errors.contactPhone' | t }}</p>
+          }
+        </div>
+
+        <button class="submit-button" type="submit" [disabled]="busy() || hrRegisterForm.invalid">{{ 'hrAccess.createAccount' | t }}</button>
+      </form>
+    } @else {
+      <form class="form-card" #hrLoginForm="ngForm" (ngSubmit)="login()">
+        <h2>{{ 'hrAccess.loginTitle' | t }}</h2>
+
+        <label>
+          {{ 'studentAccess.email' | t }}
+          <input [(ngModel)]="loginForm.email" name="loginEmail" type="email" required email maxlength="150" #hrLoginEmail="ngModel" [class.input-error]="hrLoginEmail.invalid && (hrLoginEmail.touched || hrLoginForm.submitted)" />
+        </label>
+        @if (hrLoginEmail.invalid && (hrLoginEmail.touched || hrLoginForm.submitted)) {
+          <p class="field-error">{{ hrLoginEmail.errors?.['required'] ? ('hrAccess.errors.emailRequired' | t) : ('hrAccess.errors.emailLoginInvalid' | t) }}</p>
+        }
+
+        <label>
+          {{ 'hrAccess.password' | t }}
+          <input [(ngModel)]="loginForm.password" name="loginPassword" type="password" required minlength="8" maxlength="64" #hrLoginPassword="ngModel" [class.input-error]="hrLoginPassword.invalid && (hrLoginPassword.touched || hrLoginForm.submitted)" />
+        </label>
+        @if (hrLoginPassword.invalid && (hrLoginPassword.touched || hrLoginForm.submitted)) {
+          <p class="field-error">{{ hrLoginPassword.errors?.['required'] ? ('hrAccess.errors.passwordRequired' | t) : ('hrAccess.errors.passwordShort' | t) }}</p>
+        }
+
+        <button class="submit-button" type="submit" [disabled]="busy() || hrLoginForm.invalid">{{ 'hrAccess.signIn' | t }}</button>
+        <a routerLink="/hr-dashboard" class="secondary-link">{{ 'hrAccess.dashboardLink' | t }}</a>
+      </form>
+    }
+  </div>
+</section>

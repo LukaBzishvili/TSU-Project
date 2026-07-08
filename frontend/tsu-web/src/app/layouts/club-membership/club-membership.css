@@ -1,0 +1,183 @@
+.page-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 0;
+}
+
+.page-hero,
+.membership-form,
+.preview-card,
+.confirmation-card,
+.hero-note {
+  display: grid;
+  gap: 14px;
+}
+
+.page-hero {
+  margin-bottom: 24px;
+  padding: 30px;
+  border-radius: 28px;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 20px;
+  background:
+    radial-gradient(circle at top left, rgba(199, 162, 75, 0.22), transparent 28%),
+    linear-gradient(145deg, rgba(15, 45, 82, 0.98), rgba(0, 90, 169, 0.82));
+  color: var(--tsu-paper);
+  box-shadow: var(--tsu-shadow-medium);
+}
+
+.page-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--tsu-gold);
+}
+
+.hero-copy h1,
+.membership-form h2,
+.preview-card h2,
+.confirmation-card h2 {
+  font-family: var(--font-display);
+}
+
+.hero-copy h1 {
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+}
+
+.hero-copy p,
+.membership-form p,
+.preview-card p,
+.confirmation-card p,
+.hero-note p {
+  font-size: 0.94rem;
+  line-height: 1.56;
+}
+
+.hero-note {
+  padding: 18px;
+  border-radius: 22px;
+  background-color: rgba(255, 255, 255, 0.08);
+  align-content: start;
+}
+
+.hero-note span {
+  color: rgba(248, 246, 240, 0.74);
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.club-layout {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 20px;
+}
+
+.membership-form,
+.preview-card,
+.confirmation-card {
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid var(--tsu-border);
+  background-color: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--tsu-shadow-soft);
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  color: var(--tsu-blue-deep);
+  font-weight: 600;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid rgba(15, 45, 82, 0.12);
+  border-radius: 16px;
+  padding: 12px 14px;
+}
+
+input.input-error,
+textarea.input-error {
+  border-color: #d92d20;
+  box-shadow: 0 0 0 4px rgba(217, 45, 32, 0.08);
+}
+
+.field-error {
+  margin-top: -4px;
+  color: #b42318;
+  font-size: 0.86rem;
+}
+
+.checkbox-row {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+}
+
+.checkbox-row input {
+  width: 18px;
+  height: 18px;
+}
+
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background-color: var(--tsu-gold);
+  color: var(--tsu-blue-deep);
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 14px 28px rgba(15, 45, 82, 0.12);
+}
+
+.club-sidebar {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.application-code {
+  width: fit-content;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background-color: var(--tsu-blue);
+  color: var(--tsu-paper);
+  letter-spacing: 0.06em;
+}
+
+.confirmation-list {
+  display: grid;
+  gap: 10px;
+}
+
+.confirmation-list div {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background-color: var(--tsu-paper);
+}
+
+.feedback {
+  color: #2e7d32;
+}
+
+@media (max-width: 960px) {
+  .page-hero,
+  .club-layout,
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+}

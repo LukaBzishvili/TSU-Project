@@ -1,0 +1,15 @@
+<carousel
+  [slideToShow]="carouselOptions.slideToShow"
+  [slideToScroll]="carouselOptions.slideToScroll"
+  [infinite]="carouselOptions.infinite"
+  [dots]="carouselOptions.dots"
+  [arrows]="carouselOptions.arrows"
+>
+  <!-- [autoPlay]="carouselOptions.autoPlay" -->
+  <div class="carousel-slide" *ngFor="let slide of slides">
+    <img
+      src="https://www.springboard.com/blog/wp-content/uploads/2022/08/programming-skills.png"
+      alt="slider-image"
+    />
+  </div>
+</carousel>

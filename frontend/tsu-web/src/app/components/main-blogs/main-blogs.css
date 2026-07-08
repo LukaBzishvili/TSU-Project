@@ -1,0 +1,18 @@
+.blogs-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.blogs-container h2 {
+  margin-bottom: 30px;
+}
+
+.blogs-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}

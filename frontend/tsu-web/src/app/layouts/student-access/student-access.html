@@ -1,0 +1,115 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <p class="page-kicker">{{ 'studentAccess.kicker' | t }}</p>
+    <h1>{{ 'studentAccess.title' | t }}</h1>
+    <p>{{ 'studentAccess.text' | t }}</p>
+  </div>
+
+  <div class="access-layout">
+    <article class="info-card">
+      <h2>{{ 'studentAccess.whatTitle' | t }}</h2>
+      <ul>
+        <li>{{ 'studentAccess.item1' | t }}</li>
+        <li>{{ 'studentAccess.item2' | t }}</li>
+        <li>{{ 'studentAccess.item3' | t }}</li>
+        <li>{{ 'studentAccess.item4' | t }}</li>
+      </ul>
+
+      <div class="mode-switch">
+        <button type="button" [class.is-active]="mode() === 'register'" (click)="setMode('register')">{{ 'studentAccess.registerTab' | t }}</button>
+        <button type="button" [class.is-active]="mode() === 'login'" (click)="setMode('login')">{{ 'studentAccess.loginTab' | t }}</button>
+      </div>
+
+      @if (feedback()) {
+        <p class="feedback">{{ feedback() }}</p>
+      }
+    </article>
+
+    @if (mode() === 'register') {
+      <form class="form-card" #studentRegisterForm="ngForm" (ngSubmit)="register()">
+        <h2>{{ 'studentAccess.registerTitle' | t }}</h2>
+
+        <label>
+          {{ 'studentAccess.email' | t }}
+          <input [(ngModel)]="registerForm.email" name="registerEmail" type="email" required email maxlength="150" #registerEmail="ngModel" [class.input-error]="registerEmail.invalid && (registerEmail.touched || studentRegisterForm.submitted)" />
+        </label>
+        @if (registerEmail.invalid && (registerEmail.touched || studentRegisterForm.submitted)) {
+          <p class="field-error">
+            {{ registerEmail.errors?.['required'] ? ('studentAccess.errors.emailRequired' | t) : registerEmail.errors?.['email'] ? ('studentAccess.errors.emailInvalid' | t) : ('studentAccess.errors.emailLong' | t) }}
+          </p>
+        }
+
+        <label>
+          {{ 'studentAccess.password' | t }}
+          <input [(ngModel)]="registerForm.password" name="registerPassword" type="password" required minlength="8" maxlength="64" #registerPassword="ngModel" [class.input-error]="registerPassword.invalid && (registerPassword.touched || studentRegisterForm.submitted)" />
+        </label>
+        @if (registerPassword.invalid && (registerPassword.touched || studentRegisterForm.submitted)) {
+          <p class="field-error">
+            {{ registerPassword.errors?.['required'] ? ('studentAccess.errors.passwordRequired' | t) : registerPassword.errors?.['minlength'] ? ('studentAccess.errors.passwordShort' | t) : ('studentAccess.errors.passwordLong' | t) }}
+          </p>
+        }
+
+        <div class="field-grid">
+          <label>
+            {{ 'studentAccess.firstName' | t }}
+            <input [(ngModel)]="registerForm.firstName" name="firstName" required minlength="2" maxlength="50" #firstName="ngModel" [class.input-error]="firstName.invalid && (firstName.touched || studentRegisterForm.submitted)" />
+          </label>
+          @if (firstName.invalid && (firstName.touched || studentRegisterForm.submitted)) {
+            <p class="field-error">{{ 'studentAccess.errors.firstName' | t }}</p>
+          }
+
+          <label>
+            {{ 'studentAccess.lastName' | t }}
+            <input [(ngModel)]="registerForm.lastName" name="lastName" required minlength="2" maxlength="50" #lastName="ngModel" [class.input-error]="lastName.invalid && (lastName.touched || studentRegisterForm.submitted)" />
+          </label>
+          @if (lastName.invalid && (lastName.touched || studentRegisterForm.submitted)) {
+            <p class="field-error">{{ 'studentAccess.errors.lastName' | t }}</p>
+          }
+        </div>
+
+        <div class="field-grid">
+          <label>
+            {{ 'studentAccess.studentId' | t }}
+            <input [(ngModel)]="registerForm.studentIdNumber" name="studentIdNumber" required minlength="4" maxlength="30" #studentIdNumber="ngModel" [class.input-error]="studentIdNumber.invalid && (studentIdNumber.touched || studentRegisterForm.submitted)" />
+          </label>
+          @if (studentIdNumber.invalid && (studentIdNumber.touched || studentRegisterForm.submitted)) {
+            <p class="field-error">{{ 'studentAccess.errors.studentId' | t }}</p>
+          }
+
+          <label>
+            {{ 'studentAccess.graduationYear' | t }}
+            <input [(ngModel)]="registerForm.graduationYear" name="graduationYear" type="number" required min="2020" max="2100" #graduationYear="ngModel" [class.input-error]="graduationYear.invalid && (graduationYear.touched || studentRegisterForm.submitted)" />
+          </label>
+          @if (graduationYear.invalid && (graduationYear.touched || studentRegisterForm.submitted)) {
+            <p class="field-error">{{ 'studentAccess.errors.graduationYear' | t }}</p>
+          }
+        </div>
+
+        <button class="submit-button" type="submit" [disabled]="busy() || studentRegisterForm.invalid">{{ 'studentAccess.createAccount' | t }}</button>
+      </form>
+    } @else {
+      <form class="form-card" #studentLoginForm="ngForm" (ngSubmit)="login()">
+        <h2>{{ 'studentAccess.loginTitle' | t }}</h2>
+
+        <label>
+          {{ 'studentAccess.email' | t }}
+          <input [(ngModel)]="loginForm.email" name="loginEmail" type="email" required email maxlength="150" #loginEmail="ngModel" [class.input-error]="loginEmail.invalid && (loginEmail.touched || studentLoginForm.submitted)" />
+        </label>
+        @if (loginEmail.invalid && (loginEmail.touched || studentLoginForm.submitted)) {
+          <p class="field-error">{{ loginEmail.errors?.['required'] ? ('studentAccess.errors.emailRequired' | t) : ('studentAccess.errors.emailInvalid' | t) }}</p>
+        }
+
+        <label>
+          {{ 'studentAccess.password' | t }}
+          <input [(ngModel)]="loginForm.password" name="loginPassword" type="password" required minlength="8" maxlength="64" #loginPassword="ngModel" [class.input-error]="loginPassword.invalid && (loginPassword.touched || studentLoginForm.submitted)" />
+        </label>
+        @if (loginPassword.invalid && (loginPassword.touched || studentLoginForm.submitted)) {
+          <p class="field-error">{{ loginPassword.errors?.['required'] ? ('studentAccess.errors.passwordRequired' | t) : ('studentAccess.errors.passwordShort' | t) }}</p>
+        }
+
+        <button class="submit-button" type="submit" [disabled]="busy() || studentLoginForm.invalid">{{ 'studentAccess.signIn' | t }}</button>
+        <a routerLink="/student-profile" class="secondary-link">{{ 'studentAccess.profileEditor' | t }}</a>
+      </form>
+    }
+  </div>
+</section>

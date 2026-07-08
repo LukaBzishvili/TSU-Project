@@ -1,0 +1,144 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --tsu-blue: #005aa9;
+  --tsu-blue-deep: #0f2d52;
+  --tsu-blue-soft: #2c6fb2;
+  --tsu-gold: #c7a24b;
+  --tsu-gold-deep: #b48d37;
+  --tsu-sand: #f4efe2;
+  --tsu-paper: #f8f6f0;
+  --tsu-sky: #e8f1fb;
+  --tsu-ink: #1f2e3b;
+  --tsu-muted: #5d6f80;
+  --tsu-border: rgba(15, 45, 82, 0.1);
+  --tsu-shadow-soft: 0 16px 36px rgba(15, 45, 82, 0.08);
+  --tsu-shadow-medium: 0 22px 50px rgba(15, 45, 82, 0.12);
+  --font-display: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+  --font-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-georgian: 'Sylfaen', 'Segoe UI', Tahoma, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(199, 162, 75, 0.16), transparent 18%),
+    radial-gradient(circle at right top, rgba(0, 90, 169, 0.08), transparent 24%),
+    linear-gradient(180deg, #f7f8fb 0%, #eef3f8 100%);
+  color: var(--tsu-ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+html[lang='ka'] body {
+  font-family: var(--font-georgian);
+  font-size: 0.88rem;
+  line-height: 1.72;
+}
+
+html[lang='ka'] h1,
+html[lang='ka'] h2,
+html[lang='ka'] h3,
+html[lang='ka'] h4,
+html[lang='ka'] .brand strong,
+html[lang='ka'] .hero-copy h1,
+html[lang='ka'] .page-hero h1 {
+  font-family: var(--font-georgian);
+  line-height: 1.24;
+  letter-spacing: -0.01em;
+}
+
+html[lang='ka'] .page-kicker,
+html[lang='ka'] .brand-kicker,
+html[lang='ka'] .eyebrow {
+  text-transform: none;
+  letter-spacing: 0.03em;
+}
+
+html[lang='ka'] h1 {
+  font-size: 0.82em;
+}
+
+html[lang='ka'] h2,
+html[lang='ka'] h3,
+html[lang='ka'] h4 {
+  font-size: 0.88em;
+}
+
+html[lang='ka'] p,
+html[lang='ka'] li,
+html[lang='ka'] label,
+html[lang='ka'] input,
+html[lang='ka'] textarea,
+html[lang='ka'] button,
+html[lang='ka'] a {
+  line-height: 1.6;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    opacity 180ms ease;
+}
+
+a {
+  color: inherit;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.15;
+}
+
+input,
+select,
+textarea {
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: rgba(0, 90, 169, 0.42);
+  box-shadow: 0 0 0 4px rgba(0, 90, 169, 0.1);
+}
+
+::selection {
+  background-color: rgba(0, 90, 169, 0.16);
+}

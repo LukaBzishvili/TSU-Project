@@ -1,0 +1,113 @@
+<div class="main-page-container">
+  <section class="hero-section">
+    <div class="hero-copy">
+      <p class="eyebrow">{{ 'main.eyebrow' | t }}</p>
+      <h1>{{ 'main.title' | t }}</h1>
+      <p class="hero-text">{{ 'main.text' | t }}</p>
+
+      <div class="hero-actions">
+        <a routerLink="/student-access" class="button-primary">{{ 'main.studentButton' | t }}</a>
+        <a routerLink="/hr-access" class="button-secondary">{{ 'main.hrButton' | t }}</a>
+      </div>
+
+      <div class="hero-proof">
+        <span>{{ 'main.proofNews' | t }}</span>
+        <span>{{ 'main.proofProfiles' | t }}</span>
+        <span>{{ 'main.proofTickets' | t }}</span>
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      <div class="hero-brand">
+        <img src="images/logo.png" alt="TSU logo" />
+        <div>
+          <span>{{ 'main.brandLine' | t }}</span>
+          <strong>{{ 'main.brandStrong' | t }}</strong>
+        </div>
+      </div>
+
+      <div class="hero-card-grid">
+        @for (metric of highlightMetrics(); track metric.label) {
+          <article class="metric-card">
+            <span>{{ metric.label }}</span>
+            <strong>{{ metric.value }}</strong>
+            <p>{{ metric.detail }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="quick-links-section">
+    @for (link of quickLinks(); track link.title) {
+      @if (link.available && link.route) {
+        <a class="quick-link-card" [routerLink]="link.route">
+          <h2>{{ link.title }}</h2>
+          <p>{{ link.description }}</p>
+          <span class="coming-soon-chip">{{ 'main.openPage' | t }}</span>
+        </a>
+      } @else {
+        <article class="quick-link-card">
+          <h2>{{ link.title }}</h2>
+          <p>{{ link.description }}</p>
+          <span class="coming-soon-chip">{{ 'main.comingSoon' | t }}</span>
+        </article>
+      }
+    }
+  </section>
+
+  <section class="content-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">{{ 'main.latestEyebrow' | t }}</p>
+        <h2>{{ 'main.latestTitle' | t }}</h2>
+      </div>
+      <a routerLink="/news" class="section-link-disabled">{{ 'main.latestLink' | t }}</a>
+    </div>
+
+    <div class="card-grid">
+      @for (news of featuredNews(); track news.id) {
+        <article class="content-card">
+          <span class="card-tag">{{ news.category }}</span>
+          <h3>{{ news.title }}</h3>
+          <p>{{ news.summary }}</p>
+          <div class="card-meta">
+            <span>{{ news.date }}</span>
+            <span>{{ news.audience }}</span>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="content-section split-section">
+    <div>
+      <div class="section-heading left-aligned">
+        <div>
+          <p class="eyebrow">{{ 'main.eventsEyebrow' | t }}</p>
+          <h2>{{ 'main.eventsTitle' | t }}</h2>
+        </div>
+      </div>
+
+      <div class="stack-list">
+        @for (event of featuredEvents(); track event.id) {
+          <article class="event-row">
+            <div>
+              <span class="event-date">{{ event.date }}</span>
+              <h3>{{ event.title }}</h3>
+            </div>
+            <p>{{ event.location }} | {{ event.time }}</p>
+            <small>{{ event.contact }}</small>
+          </article>
+        }
+      </div>
+    </div>
+
+    <article class="spotlight-card">
+      <p class="eyebrow">{{ 'main.spotlightEyebrow' | t }}</p>
+      <h2>{{ 'main.spotlightTitle' | t }}</h2>
+      <p>{{ 'main.spotlightText' | t }}</p>
+      <a routerLink="/welcome-party" class="button-primary">{{ 'main.spotlightButton' | t }}</a>
+    </article>
+  </section>
+</div>

@@ -1,0 +1,25 @@
+<footer class="site-footer">
+  <div class="footer-grid">
+    <section>
+      <p class="footer-kicker">{{ 'footer.kicker' | t }}</p>
+      <h3>{{ 'footer.title' | t }}</h3>
+      <p>
+        {{ 'footer.description' | t }}
+      </p>
+    </section>
+
+    <section>
+      <h4>{{ 'footer.usefulPages' | t }}</h4>
+      <a routerLink="/news">{{ 'header.news' | t }}</a>
+      <a routerLink="/events">{{ 'header.events' | t }}</a>
+      <a routerLink="/club-membership">{{ 'header.clubMembership' | t }}</a>
+      <a routerLink="/welcome-party">{{ 'header.welcomeParty' | t }}</a>
+      <a routerLink="/student-access">{{ 'header.studentAccess' | t }}</a>
+      <a routerLink="/student-profile">{{ 'header.studentProfile' | t }}</a>
+      <a routerLink="/hr-access">{{ 'header.hrAccess' | t }}</a>
+      @if (authState.isHr()) {
+        <a routerLink="/hr-dashboard">{{ 'header.hrDashboard' | t }}</a>
+      }
+    </section>
+  </div>
+</footer>

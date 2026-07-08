@@ -1,0 +1,187 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <p class="page-kicker">{{ 'studentProfile.kicker' | t }}</p>
+    <h1>{{ 'studentProfile.title' | t }}</h1>
+    <p>{{ 'studentProfile.text' | t }}</p>
+  </div>
+
+  @if (!authState.isStudent()) {
+    <article class="notice-card">
+      <h2>{{ 'studentProfile.loginRequired' | t }}</h2>
+      <p>{{ 'studentProfile.loginText' | t }}</p>
+      <a routerLink="/student-access">{{ 'studentProfile.loginButton' | t }}</a>
+    </article>
+  } @else {
+    <div class="profile-layout">
+      <form class="profile-form" #studentProfileForm="ngForm" (ngSubmit)="saveProfile()">
+        <div class="section-title">
+          <h2>{{ 'studentProfile.editTitle' | t }}</h2>
+          <p>{{ 'studentProfile.editText' | t }}</p>
+        </div>
+
+        @if (feedback()) {
+          <p class="feedback">{{ feedback() }}</p>
+        }
+
+        <div class="field-grid">
+          <label>
+            {{ 'studentProfile.firstName' | t }}
+            <input [(ngModel)]="formModel.firstName" name="firstName" required minlength="2" maxlength="50" #profileFirstName="ngModel" [class.input-error]="profileFirstName.invalid && (profileFirstName.touched || studentProfileForm.submitted)" />
+          </label>
+          @if (profileFirstName.invalid && (profileFirstName.touched || studentProfileForm.submitted)) {
+            <p class="field-error">{{ 'studentProfile.errors.firstName' | t }}</p>
+          }
+
+          <label>
+            {{ 'studentProfile.lastName' | t }}
+            <input [(ngModel)]="formModel.lastName" name="lastName" required minlength="2" maxlength="50" #profileLastName="ngModel" [class.input-error]="profileLastName.invalid && (profileLastName.touched || studentProfileForm.submitted)" />
+          </label>
+          @if (profileLastName.invalid && (profileLastName.touched || studentProfileForm.submitted)) {
+            <p class="field-error">{{ 'studentProfile.errors.lastName' | t }}</p>
+          }
+
+          <label>
+            {{ 'studentProfile.studentId' | t }}
+            <input [(ngModel)]="formModel.studentIdNumber" name="studentIdNumber" required minlength="4" maxlength="30" #profileStudentId="ngModel" [class.input-error]="profileStudentId.invalid && (profileStudentId.touched || studentProfileForm.submitted)" />
+          </label>
+          @if (profileStudentId.invalid && (profileStudentId.touched || studentProfileForm.submitted)) {
+            <p class="field-error">{{ 'studentProfile.errors.studentId' | t }}</p>
+          }
+
+          <label>
+            {{ 'studentProfile.department' | t }}
+            <input [(ngModel)]="formModel.department" name="department" required minlength="2" maxlength="120" #profileDepartment="ngModel" [class.input-error]="profileDepartment.invalid && (profileDepartment.touched || studentProfileForm.submitted)" />
+          </label>
+          @if (profileDepartment.invalid && (profileDepartment.touched || studentProfileForm.submitted)) {
+            <p class="field-error">{{ 'studentProfile.errors.department' | t }}</p>
+          }
+
+          <label>
+            {{ 'studentProfile.graduationYear' | t }}
+            <input [(ngModel)]="formModel.graduationYear" name="graduationYear" type="number" required min="2020" max="2100" #profileGraduationYear="ngModel" [class.input-error]="profileGraduationYear.invalid && (profileGraduationYear.touched || studentProfileForm.submitted)" />
+          </label>
+          @if (profileGraduationYear.invalid && (profileGraduationYear.touched || studentProfileForm.submitted)) {
+            <p class="field-error">{{ 'studentProfile.errors.graduationYear' | t }}</p>
+          }
+
+          <label>
+            {{ 'studentProfile.phone' | t }}
+            <input [(ngModel)]="formModel.phone" name="phone" maxlength="25" #profilePhone="ngModel" [class.input-error]="profilePhone.invalid && (profilePhone.touched || studentProfileForm.submitted)" />
+          </label>
+          @if (profilePhone.invalid && (profilePhone.touched || studentProfileForm.submitted)) {
+            <p class="field-error">{{ 'studentProfile.errors.phone' | t }}</p>
+          }
+        </div>
+
+        <label>
+          {{ 'studentProfile.summary' | t }}
+          <textarea [(ngModel)]="formModel.summary" name="summary" rows="4" required minlength="10" maxlength="1500" #profileSummary="ngModel" [class.input-error]="profileSummary.invalid && (profileSummary.touched || studentProfileForm.submitted)"></textarea>
+        </label>
+        @if (profileSummary.invalid && (profileSummary.touched || studentProfileForm.submitted)) {
+          <p class="field-error">{{ 'studentProfile.errors.summary' | t }}</p>
+        }
+
+        <label>
+          {{ 'studentProfile.skills' | t }}
+          <input [(ngModel)]="skillsText" name="skillsText" [placeholder]="'studentProfile.skillsPlaceholder' | t" maxlength="250" />
+        </label>
+
+        <div class="field-grid">
+          <label>
+            {{ 'studentProfile.linkedIn' | t }}
+            <input [(ngModel)]="formModel.linkedInUrl" name="linkedInUrl" type="url" maxlength="250" #linkedInUrl="ngModel" [class.input-error]="linkedInUrl.invalid && (linkedInUrl.touched || studentProfileForm.submitted)" />
+          </label>
+          @if (linkedInUrl.invalid && (linkedInUrl.touched || studentProfileForm.submitted)) {
+            <p class="field-error">{{ 'studentProfile.errors.linkedIn' | t }}</p>
+          }
+
+          <label>
+            {{ 'studentProfile.github' | t }}
+            <input [(ngModel)]="formModel.gitHubUrl" name="gitHubUrl" type="url" maxlength="250" #gitHubUrl="ngModel" [class.input-error]="gitHubUrl.invalid && (gitHubUrl.touched || studentProfileForm.submitted)" />
+          </label>
+          @if (gitHubUrl.invalid && (gitHubUrl.touched || studentProfileForm.submitted)) {
+            <p class="field-error">{{ 'studentProfile.errors.github' | t }}</p>
+          }
+
+          <label>
+            {{ 'studentProfile.portfolio' | t }}
+            <input [(ngModel)]="formModel.portfolioUrl" name="portfolioUrl" type="url" maxlength="250" #portfolioUrl="ngModel" [class.input-error]="portfolioUrl.invalid && (portfolioUrl.touched || studentProfileForm.submitted)" />
+          </label>
+          @if (portfolioUrl.invalid && (portfolioUrl.touched || studentProfileForm.submitted)) {
+            <p class="field-error">{{ 'studentProfile.errors.portfolio' | t }}</p>
+          }
+        </div>
+
+        <label class="checkbox-row">
+          <input [(ngModel)]="formModel.isVisibleToHr" name="isVisibleToHr" type="checkbox" />
+          <span>{{ 'studentProfile.visibility' | t }}</span>
+        </label>
+
+        <div class="experience-block">
+          <div class="section-title inline-title">
+            <h2>{{ 'studentProfile.experience' | t }}</h2>
+            <button type="button" class="ghost-button" (click)="addExperience()">{{ 'studentProfile.addExperience' | t }}</button>
+          </div>
+
+          @for (experience of formModel.experiences; track $index) {
+            <div class="experience-card">
+              <div class="field-grid">
+                <label>
+                  {{ 'studentProfile.expTitle' | t }}
+                  <input [(ngModel)]="experience.title" [name]="'title' + $index" maxlength="80" />
+                </label>
+
+                <label>
+                  {{ 'studentProfile.expOrganization' | t }}
+                  <input [(ngModel)]="experience.organization" [name]="'organization' + $index" maxlength="120" />
+                </label>
+
+                <label>
+                  {{ 'studentProfile.expPeriod' | t }}
+                  <input [(ngModel)]="experience.period" [name]="'period' + $index" maxlength="40" />
+                </label>
+              </div>
+
+              <label>
+                {{ 'studentProfile.expDescription' | t }}
+                <textarea [(ngModel)]="experience.description" [name]="'description' + $index" rows="3" maxlength="500"></textarea>
+              </label>
+
+              <button type="button" class="text-button" (click)="removeExperience($index)">{{ 'studentProfile.remove' | t }}</button>
+            </div>
+          }
+        </div>
+
+        <button class="submit-button" type="submit" [disabled]="saving() || studentProfileForm.invalid">{{ 'studentProfile.save' | t }}</button>
+      </form>
+
+      <div class="sidebar">
+        <article class="panel-card">
+          <div class="section-title">
+            <h2>{{ 'studentProfile.cvTitle' | t }}</h2>
+            <p>{{ 'studentProfile.cvText' | t }}</p>
+          </div>
+
+          <label class="upload-label">
+            <input type="file" accept=".pdf,.doc,.docx" (change)="onFileSelected($event)" />
+            <span>{{ 'studentProfile.cvChoose' | t }}</span>
+          </label>
+
+          @if (selectedFileName()) {
+            <p class="muted-text">{{ 'studentProfile.selected' | t }} {{ selectedFileName() }}</p>
+          }
+
+          <div class="cv-list">
+            @for (cv of profile()?.cvFiles ?? []; track cv.id) {
+              <article class="cv-row">
+                <strong>{{ cv.originalFileName }}</strong>
+                <span>{{ cv.uploadedAt }}</span>
+              </article>
+            }
+          </div>
+        </article>
+
+      </div>
+    </div>
+  }
+</section>

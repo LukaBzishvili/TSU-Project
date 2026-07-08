@@ -1,0 +1,128 @@
+.page-shell {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 36px 24px 0;
+}
+
+.page-hero,
+.event-card {
+  display: grid;
+  gap: 14px;
+}
+
+.page-hero {
+  margin-bottom: 28px;
+  padding: 36px;
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at top left, rgba(199, 162, 75, 0.3), transparent 28%),
+    linear-gradient(145deg, rgba(15, 45, 82, 0.97), rgba(0, 90, 169, 0.84));
+  color: var(--tsu-paper);
+  box-shadow: 0 28px 62px rgba(15, 45, 82, 0.18);
+}
+
+.page-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  color: var(--tsu-gold);
+}
+
+.page-hero h1,
+.event-card h2 {
+  font-family: var(--font-display);
+}
+
+.page-hero h1 {
+  font-size: clamp(2.1rem, 4vw, 3.5rem);
+}
+
+html[lang='ka'] .page-hero h1 {
+  font-size: clamp(1.5rem, 2.7vw, 2.45rem);
+  line-height: 1.28;
+  max-width: 16ch;
+}
+
+html[lang='ka'] .page-hero p:last-child {
+  font-size: 0.9rem;
+  line-height: 1.62;
+}
+
+.event-list {
+  display: grid;
+  gap: 20px;
+}
+
+.feedback {
+  margin-bottom: 16px;
+  color: var(--tsu-muted);
+  font-size: 0.94rem;
+}
+
+.event-card {
+  padding: 26px;
+  border-radius: 26px;
+  border: 1px solid rgba(15, 45, 82, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 251, 255, 0.95));
+  box-shadow: 0 18px 38px rgba(15, 45, 82, 0.08);
+}
+
+.event-top,
+.event-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.event-badge,
+.event-date {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+
+.event-badge {
+  background-color: var(--tsu-sand);
+  color: var(--tsu-blue-deep);
+}
+
+.event-date {
+  background-color: var(--tsu-sky);
+  color: var(--tsu-blue);
+}
+
+.event-meta dt {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  color: var(--tsu-blue);
+}
+
+.event-meta dd {
+  color: var(--tsu-muted);
+}
+
+html[lang='ka'] .event-card h2 {
+  font-size: clamp(1rem, 1.45vw, 1.22rem);
+  line-height: 1.34;
+}
+
+html[lang='ka'] .event-meta dt,
+html[lang='ka'] .event-meta dd,
+html[lang='ka'] .event-card p {
+  line-height: 1.58;
+}
+
+.event-meta div {
+  min-width: 180px;
+}
+
+.ticket-link {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 12px 16px;
+  background-color: var(--tsu-gold);
+  color: var(--tsu-blue-deep);
+  text-decoration: none;
+}

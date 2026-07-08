@@ -1,0 +1,25 @@
+# Frontend
+frontend/tsu-web/node_modules/
+frontend/tsu-web/dist/
+frontend/tsu-web/.angular/
+frontend/tsu-web/coverage/
+frontend/tsu-web/.vscode/
+
+# Backend
+backend/**/bin/
+backend/**/obj/
+backend/**/Uploads/
+backend/**/appsettings.Development.json
+backend/**/.vs/
+backend/**/.dotnet/
+backend/**/*.csproj.user
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Editors and OS
+.DS_Store
+Thumbs.db
+.idea/
