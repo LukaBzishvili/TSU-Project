@@ -1,25 +1,46 @@
 <footer class="site-footer">
-  <div class="footer-grid">
-    <section>
-      <p class="footer-kicker">{{ 'footer.kicker' | t }}</p>
-      <h3>{{ 'footer.title' | t }}</h3>
-      <p>
-        {{ 'footer.description' | t }}
-      </p>
-    </section>
+  <div class="footer-shell">
+    <div class="footer-grid">
+      <section class="footer-brand">
+        <div class="footer-logo-row">
+          <img src="images/logo.png" alt="TSU logo" />
+          <div>
+            <p class="footer-kicker">{{ 'footer.kicker' | t }}</p>
+            <h3>{{ 'footer.title' | t }}</h3>
+          </div>
+        </div>
+        <p class="footer-description">{{ 'footer.description' | t }}</p>
+      </section>
 
-    <section>
-      <h4>{{ 'footer.usefulPages' | t }}</h4>
-      <a routerLink="/news">{{ 'header.news' | t }}</a>
-      <a routerLink="/events">{{ 'header.events' | t }}</a>
-      <a routerLink="/club-membership">{{ 'header.clubMembership' | t }}</a>
-      <a routerLink="/welcome-party">{{ 'header.welcomeParty' | t }}</a>
-      <a routerLink="/student-access">{{ 'header.studentAccess' | t }}</a>
-      <a routerLink="/student-profile">{{ 'header.studentProfile' | t }}</a>
-      <a routerLink="/hr-access">{{ 'header.hrAccess' | t }}</a>
-      @if (authState.isHr()) {
-        <a routerLink="/hr-dashboard">{{ 'header.hrDashboard' | t }}</a>
-      }
-    </section>
+      <section class="footer-links">
+        <h4>{{ 'footer.usefulPages' | t }}</h4>
+        <div class="footer-link-grid">
+          <a routerLink="/news">{{ 'header.news' | t }}</a>
+          <a routerLink="/events">{{ 'header.events' | t }}</a>
+          <a routerLink="/club-membership">{{ 'header.clubMembership' | t }}</a>
+          <a routerLink="/welcome-party">{{ 'header.welcomeParty' | t }}</a>
+          <a routerLink="/student-access">{{ 'header.studentAccess' | t }}</a>
+          <a routerLink="/student-profile">{{ 'header.studentProfile' | t }}</a>
+          <a routerLink="/hr-access">{{ 'header.hrAccess' | t }}</a>
+          @if (authState.isHr()) {
+            <a routerLink="/hr-dashboard">{{ 'header.hrDashboard' | t }}</a>
+          }
+        </div>
+      </section>
+
+      <section class="footer-contact">
+        <h4>{{ 'footer.contact' | t }}</h4>
+        <div class="contact-card">
+          <p>{{ 'footer.address' | t }}</p>
+          <a href="mailto:cs.department@tsu.ge">{{ 'footer.email' | t }}</a>
+          <a href="mailto:career.cs@tsu.ge">{{ 'footer.services' | t }}</a>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer-bottom">
+      <p>{{ 'footer.kicker' | t }}</p>
+      <a href="https://www.tsu.ge/" target="_blank" rel="noreferrer">{{ 'header.officialSite' | t }}</a>
+    </div>
   </div>
 </footer>

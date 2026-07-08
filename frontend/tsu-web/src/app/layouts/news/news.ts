@@ -13,6 +13,7 @@ import { ExternalNewsItem } from '../../models/models';
 })
 export class NewsLayout {
   private readonly api = inject(PortalApiService);
+  protected readonly fallbackImage = 'images/logo.png';
 
   protected readonly loading = signal(true);
   protected readonly feedback = signal('');
@@ -36,5 +37,16 @@ export class NewsLayout {
       },
       complete: () => this.loading.set(false),
     });
+  }
+
+  protected onImageError(event: Event) {
+    const image = event.target as HTMLImageElement;
+
+    if (image.src.endsWith(this.fallbackImage))
+    {
+      return;
+    }
+
+    image.src = this.fallbackImage;
   }
 }

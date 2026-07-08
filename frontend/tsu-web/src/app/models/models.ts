@@ -5,6 +5,7 @@ export interface NewsItem {
   date: string;
   summary: string;
   audience: string;
+  imageUrl?: string;
 }
 
 export interface ExternalNewsItem {
@@ -14,6 +15,7 @@ export interface ExternalNewsItem {
   category: string;
   audience: string;
   url: string;
+  imageUrl: string;
   source: string;
 }
 
@@ -50,6 +52,7 @@ export interface EventItem {
   format: string;
   summary: string;
   organizer?: string;
+  imageUrl?: string;
 }
 
 export interface ExperienceEntry {
@@ -125,6 +128,7 @@ export interface QuickLink {
   description: string;
   available: boolean;
   route?: string;
+  imageUrl?: string;
 }
 
 export interface AppSession {

@@ -55,6 +55,21 @@ public partial class TsuNewsService(HttpClient httpClient, ILogger<TsuNewsServic
         return $"{SourceBaseUrl.TrimEnd('/')}/{href.TrimStart('/')}";
     }
 
+    private static string BuildAbsoluteImageUrl(string href)
+    {
+        if (string.IsNullOrWhiteSpace(href))
+        {
+            return string.Empty;
+        }
+
+        if (Uri.TryCreate(href, UriKind.Absolute, out var absoluteUri))
+        {
+            return absoluteUri.ToString();
+        }
+
+        return $"{SourceBaseUrl.TrimEnd('/')}/{href.TrimStart('/')}";
+    }
+
     private static string CleanText(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -93,8 +108,37 @@ public partial class TsuNewsService(HttpClient httpClient, ILogger<TsuNewsServic
 
     private static List<ExternalNewsItemDto> ParseDetailedCards(string html)
     {
-        var cards = NewsCardRegex().Matches(html);
+        var listingCards = NewsListingCardRegex().Matches(html);
         var items = new List<ExternalNewsItemDto>();
+
+        foreach (Match card in listingCards)
+        {
+            var title = CleanText(card.Groups["title"].Value);
+            var date = CleanText(card.Groups["date"].Value);
+            var href = CleanText(card.Groups["href"].Value);
+            var imageUrl = CleanText(card.Groups["image"].Value);
+
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                continue;
+            }
+
+            items.Add(new ExternalNewsItemDto
+            {
+                Title = title,
+                Date = date,
+                Summary = DefaultSummary,
+                Url = BuildAbsoluteUrl(href),
+                ImageUrl = BuildAbsoluteImageUrl(imageUrl),
+            });
+        }
+
+        if (items.Count > 0)
+        {
+            return items;
+        }
+
+        var cards = NewsCardRegex().Matches(html);
 
         foreach (Match card in cards)
         {
@@ -102,6 +146,7 @@ public partial class TsuNewsService(HttpClient httpClient, ILogger<TsuNewsServic
             var date = CleanText(card.Groups["date"].Value);
             var summary = NormalizeSummary(CleanText(card.Groups["summary"].Value), title);
             var href = CleanText(card.Groups["href"].Value);
+            var imageUrl = CleanText(card.Groups["image"].Value);
 
             if (string.IsNullOrWhiteSpace(title))
             {
@@ -114,6 +159,7 @@ public partial class TsuNewsService(HttpClient httpClient, ILogger<TsuNewsServic
                 Date = date,
                 Summary = summary,
                 Url = BuildAbsoluteUrl(href),
+                ImageUrl = BuildAbsoluteImageUrl(imageUrl),
             });
         }
 
@@ -142,6 +188,7 @@ public partial class TsuNewsService(HttpClient httpClient, ILogger<TsuNewsServic
                 Date = date,
                 Summary = DefaultSummary,
                 Url = BuildAbsoluteUrl(href),
+                ImageUrl = string.Empty,
             });
         }
 
@@ -157,21 +204,24 @@ public partial class TsuNewsService(HttpClient httpClient, ILogger<TsuNewsServic
                 Title = "TSU STUDENTS WILL TRAVEL TO FRENCH LANGUAGE COURSES",
                 Date = "14 June 2025",
                 Summary = "Students of the Computer Science Department at TSU were selected for a one-month French language course.",
-                Url = "https://www.computing.tsu.ge/en/news/77"
+                Url = "https://www.computing.tsu.ge/en/news/77",
+                ImageUrl = "https://www.computing.tsu.ge/upload/news/7BOV9yuIZucrYMqk.jpg"
             },
             new ExternalNewsItemDto
             {
                 Title = "First graduate of the Computer Science (Georgian-French) Double Diploma Bachelor's Program",
                 Date = "15 May 2025",
                 Summary = "An official update from the TSU Computer Science department about the first graduate of the Georgian-French double diploma program.",
-                Url = "https://www.computing.tsu.ge/en/news"
+                Url = "https://www.computing.tsu.ge/news/78",
+                ImageUrl = "https://www.computing.tsu.ge/upload/news/K0ywZjWRsWPo7EM5.jpg"
             },
             new ExternalNewsItemDto
             {
                 Title = "A conference on \"Gender Dimensions of Cybersecurity\" was held.",
                 Date = "19 June 2024",
                 Summary = "TSU Computer Science shared a department news item about a conference focused on cybersecurity and gender dimensions.",
-                Url = "https://www.computing.tsu.ge/en/news"
+                Url = "https://www.computing.tsu.ge/news/75",
+                ImageUrl = "https://www.computing.tsu.ge/upload/news/laM8kgavtvy8hVAa.jpg"
             }
         ];
     }
@@ -259,7 +309,12 @@ public partial class TsuNewsService(HttpClient httpClient, ILogger<TsuNewsServic
     }
 
     [GeneratedRegex(
-        "<a[^>]*href=\"(?<href>[^\"]+)\"[^>]*>\\s*(?:<img[^>]*>\\s*)?(?:<[^>]+>\\s*)*(?<title>.*?)\\s*</a>\\s*(?:<[^>]+>\\s*)*(?<date>\\d{1,2}\\s+[A-Za-z]+\\s+\\d{4}|\\d{1,2}/\\d{1,2}/\\d{4}|\\d{1,2}\\s+[A-Za-z]+\\s+\\d{2,4})\\s*(?:<[^>]+>\\s*)*(?<summary>.*?)(?=(?:<a[^>]*href=)|(?:</article>)|(?:<img[^>]*>)|(?:<section)|(?:<div class=\"pagination\")|$)",
+        "<div class=\"col-lg-4\\s+col-md-6\\s+marginTop-30\">.*?<img[^>]*src=\"(?<image>[^\"]+)\"[^>]*alt=\"(?<alt>[^\"]*)\"[^>]*>.*?<a\\s+href=\"(?<href>[^\"]+)\"\\s+class=\"h6\\s+mb-3\">\\s*(?<title>.*?)\\s*</a>.*?<div class=\"media-body ml-4\">\\s*(?<date>\\d{1,2}\\s+[A-Za-z]+\\s+\\d{4})\\s*</div>",
+        RegexOptions.IgnoreCase | RegexOptions.Singleline)]
+    private static partial Regex NewsListingCardRegex();
+
+    [GeneratedRegex(
+        "<a[^>]*href=\"(?<href>[^\"]+)\"[^>]*>\\s*(?:<img[^>]*src=\"(?<image>[^\"]+)\"[^>]*>\\s*)?(?:<[^>]+>\\s*)*(?<title>.*?)\\s*</a>\\s*(?:<[^>]+>\\s*)*(?<date>\\d{1,2}\\s+[A-Za-z]+\\s+\\d{4}|\\d{1,2}/\\d{1,2}/\\d{4}|\\d{1,2}\\s+[A-Za-z]+\\s+\\d{2,4})\\s*(?:<[^>]+>\\s*)*(?<summary>.*?)(?=(?:<a[^>]*href=)|(?:</article>)|(?:<img[^>]*>)|(?:<section)|(?:<div class=\"pagination\")|$)",
         RegexOptions.IgnoreCase | RegexOptions.Singleline)]
     private static partial Regex NewsCardRegex();
 

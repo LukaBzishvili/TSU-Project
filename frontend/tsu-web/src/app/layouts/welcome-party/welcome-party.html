@@ -63,23 +63,7 @@
         @if (partyFaculty.invalid && (partyFaculty.touched || welcomePartyForm.submitted)) {
           <p class="field-error">{{ 'welcomeParty.errors.faculty' | t }}</p>
         }
-
-        <label>
-          {{ 'welcomeParty.guests' | t }}
-          <input [(ngModel)]="form.guestCount" name="guestCount" type="number" min="0" max="2" #partyGuestCount="ngModel" [class.input-error]="partyGuestCount.invalid && (partyGuestCount.touched || welcomePartyForm.submitted)" />
-        </label>
-        @if (partyGuestCount.invalid && (partyGuestCount.touched || welcomePartyForm.submitted)) {
-          <p class="field-error">{{ 'welcomeParty.errors.guests' | t }}</p>
-        }
       </div>
-
-      <label>
-        {{ 'welcomeParty.notes' | t }}
-        <textarea [(ngModel)]="form.notes" name="notes" rows="4" maxlength="500" #partyNotes="ngModel" [class.input-error]="partyNotes.invalid && (partyNotes.touched || welcomePartyForm.submitted)"></textarea>
-      </label>
-      @if (partyNotes.invalid && (partyNotes.touched || welcomePartyForm.submitted)) {
-        <p class="field-error">{{ 'welcomeParty.errors.notes' | t }}</p>
-      }
 
       <label class="checkbox-row">
         <input [(ngModel)]="form.agreed" name="agreed" type="checkbox" required #partyAgreed="ngModel" [class.input-error]="partyAgreed.invalid && (partyAgreed.touched || welcomePartyForm.submitted)" />
@@ -104,7 +88,6 @@
           <strong>{{ registration()?.ticketCode || previewCode() }}</strong>
         </div>
         <p>{{ form.faculty }}</p>
-        <p class="muted-line">{{ 'welcomeParty.guestLine' | t }} {{ form.guestCount }}</p>
       </article>
 
       @if (registration(); as saved) {

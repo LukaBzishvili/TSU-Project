@@ -25,8 +25,6 @@ export class WelcomePartyLayout {
     email: '',
     studentId: '',
     faculty: 'Computer Science',
-    guestCount: 0,
-    notes: '',
     agreed: false,
   };
 

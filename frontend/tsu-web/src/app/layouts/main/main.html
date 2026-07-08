@@ -42,12 +42,22 @@
     @for (link of quickLinks(); track link.title) {
       @if (link.available && link.route) {
         <a class="quick-link-card" [routerLink]="link.route">
+          @if (link.imageUrl) {
+            <div class="card-media quick-link-media">
+              <img [src]="link.imageUrl" [alt]="link.title" loading="lazy" />
+            </div>
+          }
           <h2>{{ link.title }}</h2>
           <p>{{ link.description }}</p>
           <span class="coming-soon-chip">{{ 'main.openPage' | t }}</span>
         </a>
       } @else {
         <article class="quick-link-card">
+          @if (link.imageUrl) {
+            <div class="card-media quick-link-media">
+              <img [src]="link.imageUrl" [alt]="link.title" loading="lazy" />
+            </div>
+          }
           <h2>{{ link.title }}</h2>
           <p>{{ link.description }}</p>
           <span class="coming-soon-chip">{{ 'main.comingSoon' | t }}</span>
@@ -68,6 +78,11 @@
     <div class="card-grid">
       @for (news of featuredNews(); track news.id) {
         <article class="content-card">
+          @if (news.imageUrl) {
+            <div class="card-media content-media">
+              <img [src]="news.imageUrl" [alt]="news.title" loading="lazy" />
+            </div>
+          }
           <span class="card-tag">{{ news.category }}</span>
           <h3>{{ news.title }}</h3>
           <p>{{ news.summary }}</p>
@@ -92,6 +107,11 @@
       <div class="stack-list">
         @for (event of featuredEvents(); track event.id) {
           <article class="event-row">
+            @if (event.imageUrl) {
+              <div class="event-media">
+                <img [src]="event.imageUrl" [alt]="event.title" loading="lazy" />
+              </div>
+            }
             <div>
               <span class="event-date">{{ event.date }}</span>
               <h3>{{ event.title }}</h3>
@@ -104,6 +124,9 @@
     </div>
 
     <article class="spotlight-card">
+      <div class="spotlight-media">
+        <img [src]="spotlightImage" alt="TSU spotlight" loading="lazy" />
+      </div>
       <p class="eyebrow">{{ 'main.spotlightEyebrow' | t }}</p>
       <h2>{{ 'main.spotlightTitle' | t }}</h2>
       <p>{{ 'main.spotlightText' | t }}</p>

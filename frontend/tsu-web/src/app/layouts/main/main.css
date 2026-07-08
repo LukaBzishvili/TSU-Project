@@ -297,6 +297,25 @@ html[lang='ka'] .metric-card p {
   box-shadow: var(--tsu-shadow-soft);
 }
 
+.card-media,
+.event-media,
+.spotlight-media {
+  overflow: hidden;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top left, rgba(199, 162, 75, 0.2), transparent 28%),
+    linear-gradient(145deg, rgba(15, 45, 82, 0.95), rgba(0, 90, 169, 0.78));
+}
+
+.card-media img,
+.event-media img,
+.spotlight-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
 .quick-link-card {
   padding: 24px;
   text-decoration: none;
@@ -304,6 +323,11 @@ html[lang='ka'] .metric-card p {
   transition:
     transform 180ms ease,
     border-color 180ms ease;
+}
+
+.quick-link-media {
+  margin: -8px -8px 2px;
+  aspect-ratio: 16 / 10;
 }
 
 .quick-link-card p,
@@ -368,6 +392,11 @@ html[lang='ka'] .metric-card p {
   padding: 24px;
 }
 
+.content-media {
+  margin: -8px -8px 2px;
+  aspect-ratio: 16 / 9;
+}
+
 .content-card h3,
 .event-row h3 {
   font-family: var(--font-display);
@@ -410,6 +439,11 @@ html[lang='ka'] .metric-card p {
   padding: 24px;
 }
 
+.event-media {
+  margin: -8px -8px 2px;
+  aspect-ratio: 16 / 7;
+}
+
 .event-row h3,
 .spotlight-card h2 {
   color: var(--tsu-blue-deep);
@@ -425,6 +459,11 @@ html[lang='ka'] .metric-card p {
   background: linear-gradient(180deg, rgba(244, 239, 226, 0.92), rgba(255, 255, 255, 0.92));
   position: relative;
   overflow: hidden;
+}
+
+.spotlight-media {
+  margin: -8px -8px 2px;
+  aspect-ratio: 16 / 9;
 }
 
 .spotlight-card::before {
@@ -496,6 +535,13 @@ html[lang='ka'] .spotlight-card p {
 
   .section-heading {
     grid-template-columns: 1fr;
+  }
+
+  .quick-link-media,
+  .content-media,
+  .event-media,
+  .spotlight-media {
+    border-radius: 14px;
   }
 
   html[lang='ka'] .hero-section {
